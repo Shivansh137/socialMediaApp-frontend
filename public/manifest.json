@@ -1,0 +1,17 @@
+{
+  "name": "Social Media App",
+  "short_name": "Social Media App",
+  "description":"From Shivansh",
+  "icons": [
+    {
+      "src": "vite.svg",
+      "sizes": "32x32",
+      "type": "image/x-icon"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "orientation":"portrait",
+  "background_color": "#fff",
+  "theme_color": "#fff"
+}
