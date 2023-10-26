@@ -6,7 +6,7 @@ import LoadingSreen from '../../screens/loading/LoadingScreen'
 import ErrorScreen from '../../screens/error/ErrorScreen'
 import useAuthData from "../../hooks/useAuthData"
 import Main from '../../components/Main'
-import { MdAddBox } from "react-icons/md"
+import { MdAddBox, MdChat, MdChatBubble } from "react-icons/md"
 import { useParams } from "react-router-dom"
 
 const ChatPage = () => {
@@ -27,11 +27,18 @@ const ChatPage = () => {
 isSuccess &&
 <>
 <p className="px-4 py-4 border-b-2 box-content mb-2 text-lg hidden md:block">Chats</p>
-   <ul className="w-full flex flex-col gap-2 p-2">
   {
-    usernames.map(username => <ChatList key={username} username={username} />)
+    usernames?.length ?
+     <ul className="w-full flex flex-col gap-2 py-2 ">
+     {
+       
+       usernames.map(username => <ChatList key={username} username={username} />)       
+     }
+      </ul> : <article className="text-center relative top-[50%] -translate-y-[50%] ">
+      <MdChatBubble className="mx-auto my-4" size={40} />
+      <p>Chats will appear here</p>
+    </article>
   }
-   </ul>
 </>
    }
    </Main>

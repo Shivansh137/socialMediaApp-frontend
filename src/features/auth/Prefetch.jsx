@@ -15,7 +15,7 @@ import Aside from "../../components/Aside"
 const Prefetch = () => {
     const { username } = useAuthData();
     const token = useSelector(selectToken);
-    const socket = io('https://socialmediaappapi.onrender.com' || 'http://localhost:8000')
+    const socket = io('https://socialmediaappapi.onrender.com');
     const [addNotificationDatabase, {isLoading}] = useAddNotificationMutation();
 
     useEffect(() => {

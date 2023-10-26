@@ -13,16 +13,16 @@ const MyStoryCircle = () => {
     const { data: profilePic} = useGetProfilePicQuery(username);
     const mystories = useSelector(selectMyStories);
      return (
-        <li className={`${mystories?.length ? 'bg-gradient-to-br from-pink-500 via-yellow-500 to-sky-500' : 'dark:bg-gray-700'} inline-block p-[1px] rounded-lg md:hidden`}>
-            <Link to={`/stories/${mystories?.length ? 'mystories' : 'add_story'}`} className="rounded-lg p-2 sm:px-3 sm:gap-3 bg-light dark:bg-dark flex flex-col gap-2 items-center relative">
-              <section className="relative">
-                <ProfilePicCircle src={profilePic} className='w-16 sm:w-20 sm:h-20 dark:bg-dark-sec h-16' />
+        <li className={`inline-block p-[1px] rounded-lg md:hidden`}>
+            <Link to={`/stories/${mystories?.length ? 'mystories' : 'add_story'}`} className="rounded-lg sm:px-3 sm:gap-3 flex flex-col gap-2 items-center">
+              <section className={`relative ${mystories?.length ? 'bg-gradient-to-br from-pink-500 via-violet-500 to-blue-500' : 'bg-gray-500'} rounded-full p-0.5`}>
+                <ProfilePicCircle src={profilePic} className='w-16  h-16 sm:w-20 sm:h-20' />
                 {
                 mystories?.length ? '' : <BsPlusCircleFill className="absolute bottom-0 right-0 text-blue-600 bg-white rounded-full" /> 
                }
               
               </section>
-                <p className="text-xs truncate w-16 text-center">{'Your Story'}</p>
+                <p className="text-[calc(.5rem+2px)] truncate text-center">{'Your Story'}</p>
             </Link>
         </li>
     )

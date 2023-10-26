@@ -32,7 +32,7 @@ const FollowButton = ({username,classname}) => {
       else{
         try {
           await toggleFollow({ followerUsername:myUsername,followingUsername:username}).unwrap();
-          refetch();
+     refetch();
           if(!isFollowing){
             socket.emit('follow', myUsername, username);
             await addNotification({username,username2:myUsername, message:'started following you'}).unwrap();
@@ -43,8 +43,8 @@ const FollowButton = ({username,classname}) => {
      }
     }
   return (
-    <button disabled={isLoading} onClick={handleFollow} className={`${isFollowing?'border-gray-300 border-2 text-gray-500 dark:bg-dark dark:border-dark-sec dark:text-gray-300':'bg-sky-500 dark:bg-blue-600 text-white'}  disabled:text-gray-400 grid place-content-center px-4 py-2 rounded-lg ${classname}`}>
-     { isLoading ? 'Loading...' : isFollowing ? 'Remove': 'Follow'}
+    <button disabled={isLoading} onClick={handleFollow} className={`${isFollowing?' text-gray-500 bg-neutral-100 dark:bg-gray-500/60  dark:text-gray-100':'bg-sky-500 dark:bg-blue-600 text-white'}  py-2 rounded-md ${classname}`}>
+     { isLoading ? <div className="flex gap-2 py-1 justify-center"><div className="w-2 h-2 animate-bounce bg-white rounded-full"></div><div className="w-2 h-2 animate-bounce bg-white rounded-full"></div><div className="w-2 h-2 animate-bounce bg-white rounded-full"></div></div> : isFollowing ? 'Remove': 'Follow'}
       </button>
   )
 }

@@ -30,11 +30,11 @@ const Post = ({ post }) => {
     <li className="dark:bg-dark-sec dark:shadow-sm shadow-md border-[1px] dark:border-dark rounded-xl py-4 flex flex-col">
       <Link to={`/${post?.username}`} className="flex items-center gap-4 px-4 pb-4 w-fit">
         {
-          <ProfilePicCircle className='w-10 h-10 dark:bg-dark' src={profilePic} />
+          <ProfilePicCircle className='w-6 h-6 dark:bg-dark' src={profilePic} />
         }
         <div>
-          <p>{post?.username}</p>
-          {post?.location && <p className="text-xs dark:text-gray-200">{post?.location}</p>}
+          <p className="text-sm">{post?.username}</p>
+          {post?.location && <p className="text-[.6rem] dark:text-gray-200">{post?.location}</p>}
         </div>
       
       </Link>

@@ -5,9 +5,9 @@ const Header = ({title}) => {
   const navigate = useNavigate();
 
   return (
-    <header className="p-4 flex items-center gap-4 sticky top-0 dark:bg-dark shadow-sm dark:text-white md:hidden">
+    <header className="p-4 flex items-center gap-2 sticky top-0 dark:bg-dark-sec shadow-sm dark:text-white md:hidden">
         <MdArrowBack onClick={()=>{navigate(-1)}} size={25}/>
-        <p className="text-lg">{title}</p>
+        <p>{title}</p>
     </header>
   )
 }

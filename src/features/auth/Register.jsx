@@ -98,12 +98,12 @@ const Register = () => {
     <>
      { isLoading && <LoadingPage/> }
   <main className="p-4 grow flex flex-col justify-center items-center">
-      <h2 className="pb-4 text-2xl text_gradient text-center font-[Cookie]">Welcome to SocialMediaApp</h2>
-      <form className="flex flex-col gap-4 mb-2 md:w-[25vw] w-full">
+    <p className="p-4 text-2xl font-[Cookie] mb-auto">SocialMediaApp</p>
+      <form className="flex flex-col gap-3 md:w-[25vw] w-full p-4">
         <button type="button" className="flex justify-center w-fit mx-auto items-center relative" onClick={()=>{fileRef.current?.click()}}>
          <input type="file" name="profilePic" onChange={(e)=>{setProfilePic(e.target.files[0])}} id="" hidden={true} ref={fileRef} />
          {
-         profilePic ?  <img className="bg-slate-300  rounded-full w-24 h-24 box-content" src={url} alt="" />: <MdAccountCircle size={100} className="text-gray-200 " />
+         profilePic ?  <img className="bg-slate-300  rounded-full w-20 h-20 box-content" src={url} alt="" />: <MdAccountCircle size={85} color="lightgray" />
        }
         
          <span className="bg-sky-500 text-white p-2 rounded-full w-6 h-6 grid place-content-center absolute bottom-2 right-2">
@@ -111,25 +111,20 @@ const Register = () => {
           </span>
         
         </button>
-        <input ref={usernameRef} onChange={handleInput} name="username" value={data?.username} type="text" placeholder="username" className="bg-slate-200 px-4 py-4 rounded-lg w-full dark:bg-dark-sec" />
-        <input ref={nameRef} onChange={handleInput} name="name" value={data?.name} type="text" placeholder="name" className="bg-slate-200 px-4 py-4 rounded-lg w-full dark:bg-dark-sec" />
-        <input ref={passwordRef} onChange={handleInput} name="password" value={data?.password} type="password" placeholder="password" className="bg-slate-200 px-4 py-4 rounded-lg w-full dark:bg-dark-sec" />
-        <input ref={cpasswordRef} onChange={handleInput} name="cpassword" value={data?.cpassword} type="password" placeholder="confirm password" className="bg-slate-200 px-4 py-4 rounded-lg w-full dark:bg-dark-sec" />
+        <input ref={usernameRef} onChange={handleInput} name="username" value={data?.username} type="text" placeholder="username" className="bg-slate-200 px-4 py-3 rounded-lg w-full dark:bg-dark-sec" />
+        <input ref={nameRef} onChange={handleInput} name="name" value={data?.name} type="text" placeholder="name" className="bg-slate-200 px-4 py-3 rounded-lg w-full dark:bg-dark-sec" />
+        <input ref={passwordRef} onChange={handleInput} name="password" value={data?.password} type="password" placeholder="password" className="bg-slate-200 px-4 py-3 rounded-lg w-full dark:bg-dark-sec" />
+        <input ref={cpasswordRef} onChange={handleInput} name="cpassword" value={data?.cpassword} type="password" placeholder="confirm password" className="bg-slate-200 px-4 py-3 rounded-lg w-full dark:bg-dark-sec" />
         {errMsg && <p className="text-red-500 self-start text-xs">{'*' + errMsg}</p>}
-        <button onClick={handleSubmit} className="bg-sky-500 dark:bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-sky-600" type="button">Create New Account</button>
+        <button onClick={handleSubmit} className="bg-sky-500 dark:bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-sky-600 text-sm mt-2" type="button">Create New Account</button>
       </form>
-      <Link to='/login' className="text-blue-500 text-sm text-center hover:text-gray-400 self-center">Already have an account?</Link>
+      <Link to='/login' className=" text-xs text-center text-blue-400">Already have an account?</Link>
     
-       <section className="text-center mt-6 mb-2">
+       <section className="text-center mt-auto mb-2">
        <p className="text-xs">From</p>
-        <p className="text_gradient pt-1">Shivansh</p>
+        <p className="text_gradient">Shivansh</p>
        </section>
 
-       <ul className="flex items-center justify-center gap-4 text-2xl p-4">
-        <li><a href="https://github.com/Shivansh137" target="_blank"> <BsGithub/></a></li>
-        <li><a href="https://www.instagram.com/shivanshagrawal137/" target="_blank"> <BsInstagram color="hotpink"/></a></li>
-        <li><a href="https://www.linkedin.com/in/shivansh-agrawal-529b59255/" target="_blank"> <BsLinkedin color="royalblue"/></a></li>
-       </ul>
  
   </main>
     </>

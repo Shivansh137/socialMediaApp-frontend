@@ -39,20 +39,23 @@ const MyPostViewer = () => {
                         post?.media?.map(file => <CarouselImage key={nanoid()} ratio={post?.ratio} src={`https://res.cloudinary.com/dofd4iarg/image/upload/v1690608655/${file.public_id}.${file.extension}`} />)
                     }
                 </Carousel>
-                <section className="flex py-4 pr-6 items-center justify-between">
+                <section className="flex py-2 pr-6 items-center justify-between">
                 <div>
                 {
-                    post?.title && <p className="px-2 pb-1 text-xl">{post?.title}</p>
+                    post?.title && <p className="px-2 pb-1 text-lg">{post?.title}</p>
                 }
-                <p className="text-sm dark:text-gray-400 px-2 ">Created {formatDistanceToNow(new Date(post?.createdAt ?? Date.now()), { addSuffix: true })}</p>
+                <p className="text-xs dark:text-gray-400 px-2 ">Created {formatDistanceToNow(new Date(post?.createdAt ?? Date.now()), { addSuffix: true })}</p>
                 </div>
+                <section className="flex gap-4">
                 <Link to='comments'><MdComment size={30} /></Link>
+                <button onClick={handleDelete} className="w-8 h-8 grid place-content-center border-2 text-[red] border-[red] rounded-full">
+                        <MdDelete size={20} className="inline mx-1" /> 
+                    </button>
+                </section>
                 </section>
                 <section className="gap-2 py-2 flex">
                     
-                    <button onClick={handleDelete} className="px-2 py-2 border-2 text-[red] border-[red] rounded-xl w-full">
-                        <MdDelete size={20} className="inline mx-1" /> Delete Post
-                    </button>
+                   
                 </section>
                 <section className="py-2">
                     <div className="flex items-center text-lg gap-2 px-2"> 

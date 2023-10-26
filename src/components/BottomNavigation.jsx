@@ -9,7 +9,7 @@ const BottomNavigation = () => {
     const messages = useSelector(selectUnreadedMessages);
 
     return (
-        <footer className="py-4 text-4xl sm:text-4xl dark:bg-dark text-gray-800 dark:text-white md:hidden">
+        <section className="py-4 text-3xl sm:text-4xl dark:bg-dark-sec text-gray-800 dark:text-white md:hidden">
             <ul className="flex items-center justify-around">
                 <li> <Link to={'/'}> <GoHomeFill /> </Link> </li>
                 <li><Link to={'/search'}>   <BiSearch /> </Link>  </li>
@@ -27,7 +27,7 @@ const BottomNavigation = () => {
                 </li>
                 <li> <Link to={'/profile'}> <MdAccountCircle className="text-gray-500 dark:text-white" /> </Link> </li>
             </ul>
-        </footer>
+        </section>
     )
 }
 export default BottomNavigation

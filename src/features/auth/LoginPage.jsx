@@ -48,26 +48,22 @@ const LoginPage = () => {
   if(isLoading) return <LoadingPage />
   return (
     <>
-      <main className="p-4  relative grid place-content-center grow text-center">
-        <h2 className="pb-4 text-4xl text_gradient text-center font-[Cookie]">Login to continue...</h2>
-        <form className="flex flex-col gap-4 mb-2 w-screen p-4 sm:w-[20vw]">
+      <main className="p-4 text-center flex flex-col items-center grow">
+      <p className="p-4 text-2xl font-[Cookie] mb-auto">SocialMediaApp</p>
+
+        <form className="flex flex-col gap-4  w-screen px-6 py-3 sm:w-[20vw]">
+        <h2 className=" text-2xl text_gradient text-center font-[Cookie]">Login to continue...</h2>
           <input ref={usernameRef} onChange={handleInput} name="username" value={data?.username} type="text" placeholder="username" className="bg-slate-200 dark:bg-dark-sec px-4 py-3 rounded-lg block" />
           <input ref={passwordRef} onChange={handleInput} name="password" value={data?.password} type="password" placeholder="password" className="bg-slate-200 dark:bg-dark-sec px-4 py-3 rounded-lg" />
           {errMsg && <p className="text-red-500 self-start text-xs">{'*' + errMsg}</p>}
           <button onClick={handleSubmit} className="bg-sky-500 dark:bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-sky-600" type="button">Login</button>
         </form>
-        <Link to='/register' className="text-blue-500 text-sm text-center hover:text-gray-400 self-center">Don't have an account?</Link>
+        <Link to='/register' className="text-blue-400 text-xs text-center hover:text-gray-400 self-center">Don't have an account?</Link>
 
-        <section className="text-center mt-6 mb-2">
+        <section className="text-center mt-auto">
           <p className="text-xs">From</p>
           <p className="text_gradient pt-1">Shivansh</p>
         </section>
-
-        <ul className="flex items-center justify-center gap-4 text-2xl p-4">
-        <li><a href="https://github.com/Shivansh137" target="_blank"> <BsGithub/></a></li>
-        <li><a href="https://www.instagram.com/shivanshagrawal137/" target="_blank"> <BsInstagram color="hotpink"/></a></li>
-        <li><a href="https://www.linkedin.com/in/shivansh-agrawal-529b59255/" target="_blank"> <BsLinkedin color="royalblue"/></a></li>
-       </ul>
 
       </main>
     </>

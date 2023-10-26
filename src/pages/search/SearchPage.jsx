@@ -67,7 +67,7 @@ const SearchPage = () => {
                 ))
             ) :
             <>
-              <p className="px-4 py-2 text-gray-600 dark:text-gray-300">People you might know</p>
+              <p className="px-4 pb-2 text-sm text-gray-600 dark:text-gray-300">People you might know</p>
               {
                isLoading && <LoadingSreen/>
               }

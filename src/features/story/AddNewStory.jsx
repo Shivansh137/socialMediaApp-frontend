@@ -5,7 +5,7 @@ import useAuthData from "../../hooks/useAuthData"
 import { useNavigate } from "react-router-dom";
 import { LuImagePlus } from 'react-icons/lu'
 import { RiImageEditFill } from 'react-icons/ri'
-import { MdClose } from 'react-icons/md'
+import { MdClose, MdUploadFile } from 'react-icons/md'
 import { useAddNewStoryMutation } from "./storyApiSlice";
 import { useDispatch } from "react-redux";
 import { addNewStory } from "./storySlice";
@@ -50,30 +50,33 @@ const AddNewStory = () => {
             {
 
                 !url && <>
-                    <Header title="Add to Story" />
-                    <section className="rounded-lg pt-8 pb-2  bg-dark-sec flex flex-col items-center justify-center gap-8 relative top-[50%] -translate-y-[50%]">
-                        <LuImagePlus size={100} className="dark:bg-dark p-4 rounded-xl shadow-lg box-content" />
-                        <div className="w-full flex gap-2 p-4">
-                            <button onClick={() => { inputRef.current?.click() }} className="text-xl px-4 py-2 rounded-md bg-blue-500 w-full">Select image</button>
-                            <button onClick={() => { navigate('/') }} className="text-xl text-blue-400 px-4 py-2 rounded-md border-2 border-blue-500 w-full">Cancel</button>
+                  <Header title="Add New Story" />
+                    <section className="rounded-lg absolute w-full top-[50%] -translate-y-[50%] bg-gray-50 dark:bg-dark-sec py-4 flex flex-col items-center gap-4 ">
+                       <section className="p-4">
+                        <MdUploadFile size={50} className="mx-auto my-4" />
+                        No image selected
+                       </section>
+                        <div className="w-full flex flex-col gap-2 p-4">
+                            <button onClick={() => { inputRef.current?.click() }} className=" py-2 rounded-md bg-sky-400 text-white dark:bg-blue-600 w-full text-sm">Select image</button>
+                            <button onClick={() => { navigate('/') }} className=" text-sm text-blue-400 py-2 rounded-md border-2 border-blue-500 w-full">Cancel</button>
                         </div>
                     </section>
                 </>
             }
             {
                 url && <>
-                    <section className="dark:bg-dark-sec h-screen w-screen flex flex-col absolute left-0 top-0" style={{ backgroundImage: `url(${url})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }} >
+                    <section className="dark:bg-dark-sec h-screen w-screen flex flex-col absolute left-0 top-0" style={{ backgroundImage: `url(${url})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundPosition:'center' }} >
 
                         <section className=" absolute top-0 left-0 p-2 flex gap-2">
-                            <button onClick={() => { navigate('/') }} className="w-8 h-8 p-3  text-3xl bg-[rgba(0,0,0,0.3)] rounded-full text-white box-content">
-                                <MdClose />
+                            <button onClick={() => { navigate('/') }} className="w-10 h-10 text-2xl bg-[rgba(0,0,0,0.3)] rounded-full text-white box-content">
+                                <MdClose className="inline" />
                             </button>
-                            <button onClick={() => { inputRef.current?.click() }} className=" p-3 w-8 h-8 text-3xl box-content bg-[rgba(0,0,0,0.3)] rounded-full text-white">
-                                <RiImageEditFill />
+                            <button onClick={() => { inputRef.current?.click() }} className=" w-10 h-10 text-2xl box-content bg-[rgba(0,0,0,0.3)] rounded-full text-white">
+                                <RiImageEditFill className="inline" />
                             </button>
                         </section>
 
-                        <button onClick={handleSubmit} className="px-4 py-2 rounded-lg w-full text-xl font-bold bg-[rgba(0,0,0,0.2)] text-white absolute bottom-2">Add to Your Story</button>
+                        <button onClick={handleSubmit} className="px-4 py-2  w-full text-lg font-bold bg-[rgba(0,0,0,0.2)] text-white absolute bottom-0">Add to Your Story</button>
                     </section>
                 </>
             }

@@ -1,12 +1,12 @@
 import EmojiPicker from "emoji-picker-react"
 import { useRef, useState } from "react"
-import { MdOutlineEmojiEmotions, MdSend } from 'react-icons/md'
+import { MdArrowDownward, MdOutlineEmojiEmotions, MdSend } from 'react-icons/md'
 import useAuthData from "../../hooks/useAuthData";
 import { useOutletContext, useParams } from "react-router-dom";
 import { useAddNewMessageMutation } from "./chatApiSlice";
 import { nanoid } from '@reduxjs/toolkit'
 
-const ChatTextInput = ({ setMessages }) => {
+const ChatTextInput = ({ setMessages, scrollRef }) => {
     const [showEmojis, setShowEmojis] = useState(false);
     const [message, setMessage] = useState('');
     const socket = useOutletContext();
@@ -31,18 +31,11 @@ const ChatTextInput = ({ setMessages }) => {
         }
     }
     return (
-        <section className="flex items-center gap-2 px-2 py-4 md:px-4 bg-light dark:bg-dark-sec">
-            <section className="flex  bg-white dark:bg-dark shadow-sm pl-4 pr-2 py-4 rounded-full gap-3 items-center justify-between grow">
-                {
-                    showEmojis && <section ref={ref} className=" absolute left-4 bottom-[8%] md:bottom-[12%]">
-                        <EmojiPicker theme={localStorage.theme || 'dark'} emojiStyle="google" onEmojiClick={(e) => { setMessage(msg => msg.concat(e.emoji)); ref.current?.focus(); }} width={"calc(60vmin + 30px)"} height={"calc(30vmax + 30px)"} previewConfig={{ showPreview: false }} />
-                    </section>
-                }
-                <button type="button">
-                    <MdOutlineEmojiEmotions size={25} onClick={() => {
-                        setShowEmojis(show => !show);
-                    }} />
-                </button>
+        <section className="flex items-center gap-2 px-2 py-2 md:px-4 bg-light dark:bg-dark-sec relative">
+             <button onClick={()=>{ scrollRef?.current?.scrollIntoView({behavior:'smooth'})}} className="absolute text-lg bg-blue-600/50 rounded-full p-2 right-[3%] top-[0] translate-y-[-100%] ">
+          <MdArrowDownward />
+        </button>
+            <section className="flex  bg-white dark:bg-dark shadow-sm pl-4 pr-2 py-4 rounded-lg gap-3 items-center justify-between grow">
                 <input value={message} onClick={() => { setShowEmojis(false) }} onChange={(e) => { setMessage(e.target.value) }} className="grow bg-transparent dark:bg-dark" type="text" placeholder="Message..." />
             </section>
             {

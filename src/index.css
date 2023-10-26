@@ -43,20 +43,19 @@ input:focus{
 }
 
 .ring-spin {
-  width: 80px;
-  height: 80px;
+  width: 50px;
+  height: 50px;
 }
 .ring-spin div {
   box-sizing: border-box;
   display: block;
   position: absolute;
-  width: 64px;
-  height: 64px;
-  margin: 8px;
-  border: 4px solid royalblue;
+  width: 50px;
+  height: 50px;
+  border: 4px solid deepskyblue;
   border-radius: 50%;
   animation: ring-spin 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-  border-color: royalblue transparent transparent transparent;
+  border-color: deepskyblue transparent transparent transparent;
 }
 .ring-spin div:nth-child(1) {
   animation-delay: -0.45s;

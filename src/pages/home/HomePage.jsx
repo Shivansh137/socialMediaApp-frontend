@@ -1,18 +1,18 @@
 import { useState } from "react"
 import BottomNavigation from "../../components/BottomNavigation"
 import Main from "../../components/Main"
-import Aside from '../../components/Aside'
 import PostList from "../../features/post/PostList"
 import StoriesContainer from "../../features/story/StoriesContainer"
 import SideBar from "../../components/SideBar"
 import { Link } from "react-router-dom"
 import { BiMenu } from "react-icons/bi"
-import { BsHeart, BsHeartFill } from "react-icons/bs"
+import { BsHeart, BsHeartFill, BsMenuApp } from "react-icons/bs"
 import { useSelector } from "react-redux"
 import { selectAllNotifications } from "../../features/notification/notificationsSlice"
 import useAuthData from "../../hooks/useAuthData"
 import { useGetAllUsersQuery } from "../../features/user/usersApiSlice"
 import UserList from '../../features/user/UserList'
+import { MdMenu } from "react-icons/md"
 
 const HomePage = () => {
   const [showSideBar, setShowSideBar] = useState(false);
@@ -25,12 +25,12 @@ const HomePage = () => {
       <SideBar show={[showSideBar, setShowSideBar]} />
 
 
-      <header className="px-6 py-5 flex items-center shadow-sm border-b-2 dark:border-dark-sec gap-4 md:hidden text-lg sm:text-xl">
-        <BiMenu onClick={() => { setShowSideBar(true) }} className="text-2xl sm:text-3xl " />
-        <p className="">SocialMediaApp</p>
+      <header className="p-4 flex items-center dark:bg-dark-sec gap-2 md:hidden sm:text-xl">
+        <button onClick={()=>{setShowSideBar(true)}}><MdMenu size={20}/></button>
+        <p className="px-2">SocialMediaApp</p>
         <Link className="ml-auto relative" to={'/notifications'}>
           {
-            notifications?.length ? <BsHeartFill color="red" size={25} /> : <BsHeart size={25} />
+            notifications?.length ? <BsHeartFill color="red" size={20}  /> : <BsHeart  size={20}/>
           }
         </Link>
       </header>

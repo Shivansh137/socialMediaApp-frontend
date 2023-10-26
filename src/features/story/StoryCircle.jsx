@@ -6,11 +6,14 @@ import LoadingSreen from "../../screens/loading/LoadingScreen";
 const StoryCircle = ({ username, index }) => {
     const { data: profilePic, isLoading, isSuccess } = useGetProfilePicQuery(username);
     return (
-        <li className=" bg-gray-700 rounded-lg p-[1px] inline-block">
-            <Link to={`/stories/${index}`} className="rounded-lg p-2 sm:px-4 bg-slate-100 dark:bg-dark flex flex-col gap-2 sm:gap-3 items-center ">
+        <li className="rounded-lg inline-block">
+            <Link to={`/stories/${index}`} className="rounded-lg sm:px-4 flex flex-col gap-2 sm:gap-3 items-center ">
+            <section className={`relative ${!localStorage.seenStoriesUsernames?.includes(username) ? 'bg-gradient-to-br from-pink-500 via-violet-500 to-blue-500' : 'bg-gray-500'} rounded-full p-0.5`}>
+
                 {
                     profilePic ? <img className='w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-white dark:bg-dark-sec' src={`https://res.cloudinary.com/dofd4iarg/image/upload/v1690608655/${profilePic}.png`} alt="" /> : <p><MdAccountCircle className='text-slate-300 text-6xl' /></p>
                 }
+                </section>
                 <p className="text-xs truncate w-16">{username}</p>
             </Link>
         </li>

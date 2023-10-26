@@ -5,13 +5,6 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { MdAccountCircle, MdClose } from 'react-icons/md';
 import { useGetProfilePicQuery } from "../user/usersApiSlice";
 
-// components
-const Reaction = ({ emoji, count = 0 }) => {
-  return <li className='flex items-center dark:bg-[rgba(0,0,0,0.5)] px-2 py-1 rounded-full gap-1 w-fit aspect-square text-xl'>
-    <p>{emoji}</p>
-  </li>
-}
-
 const StoryPage = () => {
   const { index } = useParams();
   const [userIndex, setUserIndex] = useState(Number(index));
@@ -70,6 +63,7 @@ const StoryPage = () => {
   }
   useEffect(() => {
     addSwipeListener();
+ localStorage.setItem('seenStoriesUsernames',JSON.stringify([...(JSON.parse(localStorage.getItem('seenStoriesUsernames')) || []), users[userIndex]]));
     return () => {
       removeSwipeListener();
     }
@@ -87,11 +81,11 @@ const StoryPage = () => {
 
   return (
 
-    <div className=" whitespace-nowrap absolute top-0 left-0 w-screen bg-red-400">
+    <div className=" whitespace-nowrap absolute top-0 left-0 w-screen">
          <ul className="w-screen overflow-visible" style={{ transform: `translate(-${userIndex* 100}%, 0%)`, transition: 'all 0.3s ease-out' }}>
       {
         users.map((user, index) => (
-          <li key={user} ref={ref} className={`h-screen w-screen md:w-[25vw] z-30 relative left-0 ${storyIndex === 0 ? 'animate-[story_0.3s_linear]' : '' }`} style={{backgroundImage:`url(https://res.cloudinary.com/dofd4iarg/image/upload/v1690608655/${stories[user][storyIndex]?.media?.public_id}.png)`, backgroundRepeat:'no-repeat', backgroundSize:'cover'}} onClick={handleImgClick}>
+          <li key={user} ref={ref} className={`h-screen w-screen bg-center md:w-[25vw] z-30 relative left-0 ${storyIndex === 0 ? 'animate-[story_0.3s_linear]' : '' }`} style={{backgroundImage:`url(https://res.cloudinary.com/dofd4iarg/image/upload/v1690608655/${stories[user][storyIndex]?.media?.public_id}.png)`, backgroundRepeat:'no-repeat', backgroundSize:'cover'}} onClick={handleImgClick}>
 
              <section className="flex gap-2">
               {
