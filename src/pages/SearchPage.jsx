@@ -1,14 +1,13 @@
-import { MdClose, MdSearch } from "react-icons/md";
-import { useGetAllUsersQuery, useSearchUserMutation } from "../../features/user/usersApiSlice"
-import ErrorScreen from "../../screens/error/ErrorScreen";
-import LoadingSreen from "../../screens/loading/LoadingScreen";
-import UserList from "../../features/user/UserList";
+import { MdClose } from "react-icons/md";
+import { useGetAllUsersQuery, useSearchUserMutation } from "../features/user/usersApiSlice"
+import ErrorScreen from "../screens/ErrorScreen";
+import LoadingSreen from "../screens/LoadingScreen";
+import UserList from "../features/user/UserList";
 import { useEffect, useState } from "react";
-import { BiChat, BiSearch, BiSolidChat } from "react-icons/bi"
-import BottomNavigation from "../../components/BottomNavigation";
-import TextInput from '../../components/TextInput'
-import Main from '../../components/Main'
-import Aside from "../../components/Aside";
+import { BiSearch } from "react-icons/bi"
+import BottomNavigation from "../components/BottomNavigation";
+import Main from '../components/Main'
+import LoadingSpinner from "../screens/LoadingSpinner";
 
 const SearchPage = () => {
   const { data: users, isLoading,isSuccess, isError, error } = useGetAllUsersQuery();
@@ -36,12 +35,11 @@ const SearchPage = () => {
     handleSearch();
   }, [searchInput])
 
- 
   if (isError) return <ErrorScreen error={error} />
   return (
     <>
       <Main>
-        <section onFocus={() => { setShowSearchResults(true) }} className=" border-2 dark:border-dark shadow-sm rounded-lg pr-4 mx-2 my-4 flex dark:bg-dark-sec">
+        <section onFocus={() => { setShowSearchResults(true) }} className="border dark:border-dark shadow-md rounded-lg pr-4 mx-2 my-4 flex dark:bg-dark-sec">
           <input className="p-4 grow bg-transparent" onChange={handleSearchInput} value={searchInput} placeholder="Search..." />
           <button className="text-2xl  rounded-full" onClick={() => { setShowSearchResults(false); setSearchInput('') }}>
             {
@@ -52,7 +50,7 @@ const SearchPage = () => {
         {
           showSearchResults ?
             (loadingUsers || isFetching ?
-              <LoadingSreen /> :
+              <LoadingSpinner /> :
               (searchResult.length ?
                 <UserList users={searchResult || []} /> :
                 (searchInput ?

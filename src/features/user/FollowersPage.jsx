@@ -3,8 +3,8 @@ import Header from "../../components/Header"
 import { useGetFollowersDataQuery } from "./usersApiSlice";
 import UserList from "./UserList";
 import Main from '../../components/Main'
-import LoadingSreen from "../../screens/loading/LoadingScreen";
-import ErrorScreen from "../../screens/error/ErrorScreen";
+import LoadingSreen from "../../screens/LoadingScreen";
+import ErrorScreen from "../../screens/ErrorScreen";
 import useAuthData from "../../hooks/useAuthData";
 
 const FollowersPage = () => {

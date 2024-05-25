@@ -2,12 +2,13 @@ import BottomNavigation from "../../components/BottomNavigation"
 import Header from "../../components/Header"
 import ChatList from "./ChatList"
 import { useGetChatUsersQuery } from "./chatApiSlice"
-import LoadingSreen from '../../screens/loading/LoadingScreen'
-import ErrorScreen from '../../screens/error/ErrorScreen'
+import LoadingSreen from '../../screens/LoadingScreen'
+import ErrorScreen from '../../screens/ErrorScreen'
 import useAuthData from "../../hooks/useAuthData"
 import Main from '../../components/Main'
-import { MdAddBox, MdChat, MdChatBubble } from "react-icons/md"
+import { MdAddBox, MdChatBubble } from "react-icons/md"
 import { useParams } from "react-router-dom"
+import { useEffect } from "react"
 
 const ChatPage = () => {
   
@@ -15,26 +16,30 @@ const ChatPage = () => {
   const {data:usernames, isFetching, isSuccess, isError, error, refetch} = useGetChatUsersQuery(username);
   const {username:user} = useParams();
 
+  useEffect(()=>{
+    refetch();
+  },[])
+
   if(isError) return <ErrorScreen error={error} />
  return (
     <>
     <Header title={"Chats"} />
-    <Main>
+    <Main className={'relative min-h-screen'}>
    {
      isFetching && <LoadingSreen/>
    }
    {
 isSuccess &&
 <>
-<p className="px-4 py-4 border-b-2 box-content mb-2 text-lg hidden md:block">Chats</p>
+<p className="px-4 py-4 border-b-2 border-gray-500 box-content m-2 text-lg hidden md:block">Chats</p>
   {
     usernames?.length ?
-     <ul className="w-full flex flex-col gap-2 py-2 ">
+     <ul className="w-full flex flex-col gap-3 p-3 ">
      {
        
        usernames.map(username => <ChatList key={username} username={username} />)       
      }
-      </ul> : <article className="text-center relative top-[50%] -translate-y-[50%] ">
+      </ul> : <article className="text-center absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] ">
       <MdChatBubble className="mx-auto my-4" size={40} />
       <p>Chats will appear here</p>
     </article>

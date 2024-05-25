@@ -2,14 +2,15 @@ import { BiMenu, BiSearch } from "react-icons/bi"
 import { BsBellFill } from "react-icons/bs"
 import { GoHomeFill } from "react-icons/go"
 import { MdAccountCircle, MdChat } from "react-icons/md"
-import { Link } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import SideBar from './SideBar'
 import { useState } from "react"
+import Logo from '../components/Logo'
 
 const List = ({ title, icon, to }) => {
-
-    return <li className=" rounded-md w-full overflow-hidden">
-        <Link to={to} className="flex items-center gap-4 text-xl p-4">
+    const [path, setPath] = useState('');
+    return <li className={` hover:bg-[rgba(80,80,80,0.2)]  rounded-md w-full overflow-hidden ${ path == to ?'bg-light-sec dark:bg-dark' : ''}`}>
+        <Link onClick={()=>{setPath(location.pathname)}} to={to} className="flex items-center gap-4 text-lg p-4">
             <p className="text-2xl">{icon}</p>
             {title}
         </Link>
@@ -20,7 +21,9 @@ const Aside = () => {
     return (
         <aside className="hidden w-[20vw] bg-light dark:bg-dark-sec md:flex flex-col p-4 relative">
             <SideBar show={[showSideBar, setShowSideBar]} />
-            <p className="text-4xl p-4 text_gradient font-[Cookie]">SocialMediaApp</p>
+            <div className="p-4">
+            <Logo fontSize={28} />
+            </div>
             <ul className="px-2 py-4 flex flex-col gap-4 items-center">
                 <List icon={<GoHomeFill />} title={'Home'} to={'/'} />
                 <List icon={<BiSearch />} title={'Search'} to={'/search'} />

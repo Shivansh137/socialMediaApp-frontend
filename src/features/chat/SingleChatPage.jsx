@@ -1,22 +1,19 @@
-import Header from "../../components/Header"
 import ChatTextInput from "./ChatTextInput"
 import { useGetAllMessagesMutation } from "./chatApiSlice"
 import { useEffect, useRef, useState } from "react"
 import useAuthData from "../../hooks/useAuthData"
 import { useOutletContext, useParams } from "react-router-dom"
-import LoadingScreen from "../../screens/loading/LoadingScreen"
-import ErrorScreen from '../../screens/error/ErrorScreen'
+import LoadingScreen from "../../screens/LoadingScreen"
+import ErrorScreen from '../../screens/ErrorScreen'
 import { useGetUserByUsernameQuery, useReadUnreadedMessagesMutation } from "../user/usersApiSlice"
 import { nanoid } from "@reduxjs/toolkit"
-import { useDispatch } from "react-redux"
-import { emptyUnreadedMessages } from "./chatSlice"
+import { useDispatch, useSelector } from "react-redux"
+import { emptyUnreadedMessages, selectOnlineUsers } from "./chatSlice"
 import Main from "../../components/Main"
 import ChatHeader from "./ChatHeader"
 import ProfilePicCircle from "../../components/ProfilePicCircle"
-import LoadingSpinner from "../../screens/loading/LoadingSpinner"
+import LoadingSpinner from "../../screens/LoadingSpinner"
 import ChatPage from "./ChatPage"
-import { MdArrowDownward} from "react-icons/md"
-
 
 const SingleChatPage = () => {
   const { username, profilePic } = useAuthData();
@@ -25,9 +22,12 @@ const SingleChatPage = () => {
   const scrollRef = useRef(null);
   const socket = useOutletContext();
   const [getMessages, { isLoading: isLoadingMessages, isSuccess: isMessagesLoaded, isError: isErrorMessages, error: errorMessages }] = useGetAllMessagesMutation();
-  const { data: user, isLoading: isLoadingUserData, isSuccess: isUserLoaded, isError: isErrorUser, error: errorUser } = useGetUserByUsernameQuery(username2);
+  const { data: user, isLoading: isLoadingUserData, isSuccess: isUserLoaded } = useGetUserByUsernameQuery(username2);
+  const onlineUsers = useSelector(selectOnlineUsers);
   const [read] = useReadUnreadedMessagesMutation();
   const [messages, setMessages] = useState([]);
+  const [isTyping, setIsTyping] = useState(false);
+
   //functions
   const fetchMessages = async () => {
     try {
@@ -49,73 +49,94 @@ const SingleChatPage = () => {
 
   useEffect(() => {
     fetchMessages();
-    socket?.on("recieve-msg", message => setMessages(msgs => [...msgs, message]));
+    socket?.on("recieve-msg", message => {
+      setMessages(msgs => [...msgs, message])
+    });
     readMessages();
-  }, [username2])
+  }, [username2]);
+
   useEffect(() => {
     scrollRef?.current?.scrollIntoView();
     dispatch(emptyUnreadedMessages())
-  })
+  });
+
+  useEffect(() => {
+    socket?.on("recieveTypingStatus", e => setIsTyping(e));
+  }, []);
+
+  useEffect(() => {
+    let timer = setTimeout(() => { setIsTyping(false) }, 2000);
+    return () => { clearTimeout(timer) }
+  }, [isTyping]);
 
   if (isLoadingUserData) return <LoadingScreen />
   if (isUserLoaded) return (
     <>
-     
-    <section className="hidden md:block w-[30vw]">
-    <ChatPage />
-    </section>
-      
-    <section className="flex flex-col grow max-w-xl md:relative md:mr-4 overflow-y-scroll md:overflow-hidden">
-      <ChatHeader src={user?.profilePic} name={user?.name} username={user?.username} />
-      <Main className=' bg-light dark:bg-dark-sec'>
-        {
-          isErrorMessages && <ErrorScreen error={errorMessages} />
-        }
-        {
-          isLoadingMessages && <LoadingSpinner />
-        }
+      <section className="hidden md:block w-[30vw]">
+        <ChatPage />
+      </section>
 
-        {
-          isMessagesLoaded ? !messages.length && <article className="absolute flex flex-col justify-center items-center w-full top-[50%] text-center -translate-y-[50%]">
-            <p className="w-24 text-6xl py-4 text-center">👋🏻</p>
-            <p>Say Hi to <span className="text-blue-300">{username2}</span></p>
-          </article> : ''
-        }
-       
-        <ul className="p-2 gap-4 md:gap-8 flex flex-col grow">
+      <section className="flex flex-col grow max-w-xl md:relative md:mr-4 overflow-y-scroll md:overflow-hidden">
+        <ChatHeader src={user?.profilePic} name={user?.name} username={user?.username} isOnline={onlineUsers.includes(username2)} />
+        <Main className=' bg-white dark:bg-black'>
           {
-            messages.map((msg, i) => <>
-              {
-                new Date(messages[i]?.updatedAt).getDay() !== new Date(messages[i - 1]?.updatedAt).getDay() ? <li key={nanoid()} className="flex justify-center p-2 bg-slate-200 dark:bg-dark rounded-lg text-xs w-fit mx-auto my-2">{new Date(messages[i]?.updatedAt).toLocaleDateString('en-US', { dateStyle: 'medium' })}</li> : ''
-              }
-              <li key={nanoid()} className={`flex gap-2 max-w-[70%] ${msg?.sender === username ? "self-end flex-row-reverse" : "self-start "} `}>
-                {
-                  msg?.sender === username ?
-                    <ProfilePicCircle className='w-6 h-6 md:w-10 md:h-10 bg-white dark:bg-dark' src={profilePic} />
-                    : <ProfilePicCircle className='w-6 h-6 md:w-10 md:h-10 bg-white dark:bg-dark' src={user?.profilePic} />
-                }
-                <div className={`${msg?.sender === username ? "bg-green-200 dark:bg-gray-700" : "bg-white dark:bg-dark"} px-3 rounded-lg min-w-[20vw] md:min-w-[6vw]   flex flex-col  justify-between ${msg?.biggerText ? 'text-3xl md:text-4xl pt-2' : 'pb-2 pt-1'}  relative`}>
-                  <p>
-                    {msg?.message}
-                  </p>
-
-                  <span className="text-[10px] self-end text-gray-500">
-                    {new Date(msg.updatedAt).toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })}
-                  </span>
-                </div>
-              </li>
-            </>
-            )
+            isErrorMessages && <ErrorScreen error={errorMessages} />
           }
-        </ul>
-        <div className="py-[5vh]" ref={scrollRef}></div>
-      </Main>
-      {
-        isMessagesLoaded && <ChatTextInput scrollRef={scrollRef} fetchMessages={fetchMessages} setMessages={setMessages} />
+          {
+            isLoadingMessages && <LoadingSpinner />
+          }
+          {
+            isMessagesLoaded ? !messages.length && <article className="absolute flex flex-col justify-center items-center w-full top-[50%] text-center -translate-y-[50%]">
+              <p className="w-24 text-6xl py-4 text-center">👋🏻</p>
+              <p>Say Hi to <span className="text-blue-300">{username2}</span></p>
+            </article> : ''
+          }
 
-      }
-    </section>
-  
+          <ul className="p-2 gap-4 md:gap-8 flex flex-col grow">
+            {
+              messages.map((msg, i) => <div key={nanoid()}>
+                {
+                  new Date(messages[i]?.time).getDay() !== new Date(messages[i - 1]?.time).getDay() ? <li className="flex justify-center p-2 bg-neutral-200 dark:bg-primary/10 dark:text-primary rounded-lg text-xs w-fit mx-auto my-2">{new Date(messages[i]?.time).toLocaleDateString('en-US', { dateStyle: 'medium' })}</li> : ''
+                }
+                <li className={`flex gap-2 ${msg?.sender === username ? "self-end flex-row-reverse" : "self-start "} `}>
+                  {
+                    msg?.sender === username ?
+                      <ProfilePicCircle className='w-6 h-6 md:w-10 md:h-10 bg-white dark:bg-dark' src={profilePic} />
+                      : <ProfilePicCircle className='w-6 h-6 md:w-10 md:h-10 bg-white dark:bg-dark' src={user?.profilePic} />
+                  }
+                  <div className={`${msg?.sender === username ? "bg-green-200 dark:bg-green-500/20  dark:text-green-500 " : "bg-sky-200 dark:bg-sky-500/20 dark:text-sky-500"} pl-3 pr-2 max-w-[75%] rounded-md flex flex-col gap-1  ${msg?.biggerText ? 'text-3xl md:text-4xl pt-2' : 'py-1.5'}  relative`}>
+                    <p className="text-sm">
+                      {msg?.message}
+                    </p>
+
+                    <span className="text-[10px] self-end text-gray-500">
+                      {new Date(msg.time).toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })}
+                    </span>
+                  </div>
+                </li>
+              </div>
+              )
+            }
+            {
+              isTyping ? <li className={`flex gap-2 `}>
+              <ProfilePicCircle className='w-6 h-6 md:w-10 md:h-10 bg-white dark:bg-dark' src={user?.profilePic} />
+              <div className={`bg-primary/10 p-4 rounded-md flex items-center gap-2 relative`}>
+                  <div className="w-2 h-2 animate-bounce bg-primary rounded-full"></div>
+                  <div className="w-2 h-2 animate-bounce bg-primary rounded-full"></div>
+                  <div className="w-2 h-2 animate-bounce bg-primary rounded-full"></div> 
+              </div>
+            </li>  : ""
+            }
+
+          </ul>
+          <div className="py-[5vh]" ref={scrollRef}></div>
+        </Main>
+        {
+          isMessagesLoaded && <ChatTextInput scrollRef={scrollRef} fetchMessages={fetchMessages} setMessages={setMessages} />
+
+        }
+      </section>
+
     </>
   )
 }

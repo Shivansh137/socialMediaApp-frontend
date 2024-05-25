@@ -44,7 +44,10 @@ export const postsApiSlice = apiSlice.injectEndpoints({
                 body:{
                     username:body.username
                 }
-            })
+            }),
+            invalidatesTags:()=>{
+                return [{type:'Post', id:'USER'}]
+            }
         }),
         getComments: builder.query({
             query: id => `/posts/comments/${id}`

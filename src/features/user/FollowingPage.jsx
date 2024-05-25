@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom"
 import Header from "../../components/Header"
 import UserList from "./UserList";
 import { useGetFollowingDataQuery } from "./usersApiSlice";
-import LoadingScreen from "../../screens/loading/LoadingScreen";
+import LoadingScreen from "../../screens/LoadingScreen";
 import useAuthData from "../../hooks/useAuthData";
 import Main from '../../components/Main'
 

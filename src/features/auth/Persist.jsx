@@ -3,7 +3,8 @@ import { useRefreshMutation } from "./authApiSlice"
 import { useSelector } from "react-redux";
 import { selectToken } from "./authSlice";
 import { useEffect, useState } from "react";
-import LoadingSreen from "../../screens/loading/LoadingScreen";
+import LoadingSreen from "../../screens/LoadingScreen";
+import SplashScreen from "../../screens/SplashScreen";
 
 const Persist = () => {
     const [refresh, { isLoading, isSuccess, isError, error }] = useRefreshMutation();
@@ -24,7 +25,7 @@ const Persist = () => {
             setSuccess(true);
         }
     }, []);
-    if (isLoading) return <LoadingSreen />
+    if (isLoading) return <SplashScreen />
     if (isError && error?.data?.message === 'Unauthorized') {
         return <Navigate to={'/login'} reset />
     }

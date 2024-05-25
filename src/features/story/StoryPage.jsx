@@ -4,6 +4,7 @@ import { selectAllStories, selectAllUsernames } from "./storySlice";
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { MdAccountCircle, MdClose } from 'react-icons/md';
 import { useGetProfilePicQuery } from "../user/usersApiSlice";
+import { formatDistanceToNow } from "date-fns";
 
 const StoryPage = () => {
   const { index } = useParams();
@@ -63,7 +64,7 @@ const StoryPage = () => {
   }
   useEffect(() => {
     addSwipeListener();
- localStorage.setItem('seenStoriesUsernames',JSON.stringify([...(JSON.parse(localStorage.getItem('seenStoriesUsernames')) || []), users[userIndex]]));
+    localStorage.setItem('seenStoriesUsernames', JSON.stringify([...(JSON.parse(localStorage.getItem('seenStoriesUsernames')) || []), users[userIndex]]));
     return () => {
       removeSwipeListener();
     }
@@ -82,39 +83,42 @@ const StoryPage = () => {
   return (
 
     <div className=" whitespace-nowrap absolute top-0 left-0 w-screen">
-         <ul className="w-screen overflow-visible" style={{ transform: `translate(-${userIndex* 100}%, 0%)`, transition: 'all 0.3s ease-out' }}>
-      {
-        users.map((user, index) => (
-          <li key={user} ref={ref} className={`h-screen w-screen bg-center md:w-[25vw] z-30 relative left-0 ${storyIndex === 0 ? 'animate-[story_0.3s_linear]' : '' }`} style={{backgroundImage:`url(https://res.cloudinary.com/dofd4iarg/image/upload/v1690608655/${stories[user][storyIndex]?.media?.public_id}.png)`, backgroundRepeat:'no-repeat', backgroundSize:'cover'}} onClick={handleImgClick}>
+      <ul className="w-screen overflow-visible" style={{ transform: `translate(-${userIndex * 100}%, 0%)`, transition: 'all 0.3s ease-out' }}>
+        {
+          users.map((user, index) => (
+            <li key={user} ref={ref} className={`h-screen w-screen bg-center md:w-[25vw] z-30 relative left-0 ${storyIndex === 0 ? 'animate-[story_0.3s_linear]' : ''}`} style={{ backgroundImage: `url(https://res.cloudinary.com/dofd4iarg/image/upload/v1690608655/${stories[user][storyIndex]?.media?.public_id}.png)`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundPosition: 'center' }} onClick={handleImgClick}>
 
-             <section className="flex gap-2">
-              {
-                stories[user]?.map((_, i) => <div key={i} className="h-1 bg-gray-500 w-full">
-                  <div className={`h-full ${storyIndex >= i ? 'bg-white' : ''} ${storyIndex === i && userIndex === index ? 'storyTimer' : ''}`}></div>
-                </div>
-                )
-              }
-            </section>
+              <section className="flex gap-2 bg-dark">
+                {
+                  stories[user]?.map((_, i) => <div key={i} className="h-1 bg-gray-500 w-full">
+                    <div className={`h-full ${storyIndex >= i ? 'bg-primary' : ''} ${storyIndex === i && userIndex === index ? 'storyTimer' : ''}`}></div>
+                  </div>
+                  )
+                }
+              </section>
 
-            <section className="px-2 py-2 flex items-center gap-2">
-             <Link to={`/${user}`}>
-             {
-                profilePic ? <img className='w-10 h-10 rounded-full p-2 bg-white dark:bg-dark-sec' src={`https://res.cloudinary.com/dofd4iarg/image/upload/v1690608655/${profilePic}.png`} alt="" /> : <p><MdAccountCircle className='text-slate-300 text-4xl' /></p>
-              }
-             </Link>
-              <p>{user}</p>
-              <p>{
-              parseInt((new Date() - new Date(stories[user][storyIndex]?.createdAt)) / (1000*60*60)) > 0 ?
-              parseInt((new Date() - new Date(stories[user][storyIndex]?.createdAt)) / (1000*60*60)) + 'h' :
-              parseInt((new Date() - new Date(stories[user][storyIndex]?.createdAt)) / (1000*60)) + 'm'
-              }</p>
-              <MdClose className="ml-auto" size={25} onClick={() => { navigate('/') }} />
-            </section>
+              <section className="px-2 py-1 flex items-center bg-[rgba(0,0,0,0.5)] z-10 gap-2">
+                <Link className="flex items-center" to={`/${user}`}>
+                  {
+                    profilePic ? <img className='w-16 h-16 rounded-full p-2 bg-white dark:bg-dark-sec' src={`https://res.cloudinary.com/dofd4iarg/image/upload/v1690608655/${profilePic}.png`} alt="" /> : <p><MdAccountCircle className='text-slate-300 text-4xl' /></p>
+                  }
 
-          </li>
-        ))
-      }
-    </ul>
+
+                  <div className="flex-col">
+                    <p className=" font-normal">{user}</p>
+                    <p className="text-xs">{
+                      formatDistanceToNow(new Date(stories[user][storyIndex]?.createdAt), { addSuffix: true })
+                    }</p>
+                  </div>
+
+                </Link>
+                <MdClose className="ml-auto mr-2 cursor-pointer" size={25} onClick={() => { navigate('/') }} />
+              </section>
+
+            </li>
+          ))
+        }
+      </ul>
     </div>
   )
 }

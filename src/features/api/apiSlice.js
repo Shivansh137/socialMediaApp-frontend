@@ -1,6 +1,6 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
 const baseQuery = fetchBaseQuery({
-    baseUrl: 'https://socialmediaappapi.onrender.com',
+    baseUrl: "https://socialmediaappapi.onrender.com",//'http://localhost:8000',
     credentials:'include',
     prepareHeaders: (headers, {getState})=>{
         const token = getState().auth.token;

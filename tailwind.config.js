@@ -6,13 +6,15 @@ export default {
   ],
   theme: {
     extend: {
-      colors:{
-        'light':'rgb(241,243,245)',
-        'dark':'#222227',
-        'dark-sec':'rgba(80,80,100,0.1)'
+      colors: {
+        'light': '#F0F5F9',
+        'light-sec':'#eee',
+        'dark': 'rgb(24,25,26)',
+        'dark-sec': 'rgb(36,37,38)',
+        'primary':'#FEB941'
       }
     },
   },
   plugins: [],
-  darkMode:'class'
+  darkMode: 'class'
 }

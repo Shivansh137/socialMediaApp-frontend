@@ -1,7 +1,7 @@
 import { MdArrowBack } from "react-icons/md";
 import { useNavigate } from "react-router-dom"
 
-const Header = ({title}) => {
+const Header = ({title, className}) => {
   const navigate = useNavigate();
 
   return (
