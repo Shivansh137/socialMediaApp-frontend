@@ -131,7 +131,7 @@ const Register = () => {
               profilePic ? <img className="bg-slate-200  rounded-full w-24 h-24 box-content" src={url} alt="" /> : <MdAccountCircle size={110} color="#ddd" />
             }
 
-            <span className="bg-primary text-white p-2 rounded-full w-6 h-6 grid place-content-center absolute bottom-2 right-2">
+            <span className="bg-primary text-black p-2 rounded-full w-6 h-6 grid place-content-center absolute bottom-2 right-2">
               <MdAdd />
             </span>
 
@@ -146,7 +146,7 @@ const Register = () => {
 
           {errMsg && <p className="text-red-500 self-start text-xs">{'*' + errMsg}</p>}
 
-          <button onClick={handleSubmit} className="bg-sky-500 dark:bg-[#111] text-white p-3 rounded-lg hover:bg-sky-600 text-sm mt-2" type="button">Create New Account</button>
+          <button onClick={handleSubmit} className="bg-sky-500 text-white p-3 rounded-lg hover:bg-sky-600 text-sm mt-2" type="button">Create New Account</button>
 
           <Link to='/login' className=" text-xs text-center ">Already have an account?</Link>
         </form>

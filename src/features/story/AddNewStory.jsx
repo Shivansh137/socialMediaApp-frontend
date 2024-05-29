@@ -17,7 +17,7 @@ const AddNewStory = () => {
     const inputRef = useRef(null);
     const [file, setFile] = useState(new Blob());
     const [url, setBase64] = useState('');
-    const [addStory, { isLoading, isSuccess }] = useAddNewStoryMutation();
+    const [addStory, { isLoading }] = useAddNewStoryMutation();
 
     const handleImage = (e) => {
         setFile(e.target.files[0])

@@ -2,15 +2,15 @@ import { BiMenu, BiSearch } from "react-icons/bi"
 import { BsBellFill } from "react-icons/bs"
 import { GoHomeFill } from "react-icons/go"
 import { MdAccountCircle, MdChat } from "react-icons/md"
-import { Link, useParams } from "react-router-dom"
+import { Link } from "react-router-dom"
 import SideBar from './SideBar'
 import { useState } from "react"
 import Logo from '../components/Logo'
 
 const List = ({ title, icon, to }) => {
-    const [path, setPath] = useState('');
-    return <li className={` hover:bg-[rgba(80,80,80,0.2)]  rounded-md w-full overflow-hidden ${ path == to ?'bg-light-sec dark:bg-dark' : ''}`}>
-        <Link onClick={()=>{setPath(location.pathname)}} to={to} className="flex items-center gap-4 text-lg p-4">
+   
+    return <li className={` hover:bg-[rgba(80,80,80,0.2)]  rounded-md w-full overflow-hidden`}>
+        <Link to={to} className="flex items-center gap-4 text-lg p-4">
             <p className="text-2xl">{icon}</p>
             {title}
         </Link>

@@ -8,7 +8,7 @@ import ErrorScreen from '../../screens/ErrorScreen'
 import { useGetUserByUsernameQuery, useReadUnreadedMessagesMutation } from "../user/usersApiSlice"
 import { nanoid } from "@reduxjs/toolkit"
 import { useDispatch, useSelector } from "react-redux"
-import { emptyUnreadedMessages, selectOnlineUsers } from "./chatSlice"
+import { removeUnreadedMessages, selectOnlineUsers, selectTypingUsers } from "./chatSlice"
 import Main from "../../components/Main"
 import ChatHeader from "./ChatHeader"
 import ProfilePicCircle from "../../components/ProfilePicCircle"
@@ -16,17 +16,17 @@ import LoadingSpinner from "../../screens/LoadingSpinner"
 import ChatPage from "./ChatPage"
 
 const SingleChatPage = () => {
-  const { username, profilePic } = useAuthData();
-  const { username: username2 } = useParams();
   const dispatch = useDispatch();
   const scrollRef = useRef(null);
   const socket = useOutletContext();
-  const [getMessages, { isLoading: isLoadingMessages, isSuccess: isMessagesLoaded, isError: isErrorMessages, error: errorMessages }] = useGetAllMessagesMutation();
-  const { data: user, isLoading: isLoadingUserData, isSuccess: isUserLoaded } = useGetUserByUsernameQuery(username2);
-  const onlineUsers = useSelector(selectOnlineUsers);
-  const [read] = useReadUnreadedMessagesMutation();
+  const { username: username2 } = useParams();
   const [messages, setMessages] = useState([]);
-  const [isTyping, setIsTyping] = useState(false);
+  const { username, profilePic } = useAuthData();
+  const [read] = useReadUnreadedMessagesMutation();
+  const onlineUsers = useSelector(selectOnlineUsers);
+  const typingUsers = useSelector(selectTypingUsers);
+  const { data: user, isLoading: isLoadingUserData, isSuccess: isUserLoaded } = useGetUserByUsernameQuery(username2);
+  const [getMessages, { isLoading: isLoadingMessages, isSuccess: isMessagesLoaded, isError: isErrorMessages, error: errorMessages }] = useGetAllMessagesMutation();
 
   //functions
   const fetchMessages = async () => {
@@ -38,7 +38,6 @@ const SingleChatPage = () => {
       console.log(error);
     }
   }
-
   const readMessages = async () => {
     try {
       await read({ sender: username2, reciever: username }).unwrap();
@@ -49,25 +48,19 @@ const SingleChatPage = () => {
 
   useEffect(() => {
     fetchMessages();
-    socket?.on("recieve-msg", message => {
-      setMessages(msgs => [...msgs, message])
-    });
     readMessages();
-  }, [username2]);
-
-  useEffect(() => {
-    scrollRef?.current?.scrollIntoView();
-    dispatch(emptyUnreadedMessages())
-  });
-
-  useEffect(() => {
-    socket?.on("recieveTypingStatus", e => setIsTyping(e));
   }, []);
 
   useEffect(() => {
-    let timer = setTimeout(() => { setIsTyping(false) }, 2000);
-    return () => { clearTimeout(timer) }
-  }, [isTyping]);
+    socket.on('recieve-msg', msg => {
+      if (msg.sender === username2) setMessages(msgs => [...msgs, msg])
+    })
+  }, [socket, username2]);
+
+  useEffect(() => {
+    scrollRef?.current?.scrollIntoView();
+    dispatch(removeUnreadedMessages(username2));
+  });
 
   if (isLoadingUserData) return <LoadingScreen />
   if (isUserLoaded) return (
@@ -96,7 +89,7 @@ const SingleChatPage = () => {
             {
               messages.map((msg, i) => <div key={nanoid()}>
                 {
-                  new Date(messages[i]?.time).getDay() !== new Date(messages[i - 1]?.time).getDay() ? <li className="flex justify-center p-2 bg-neutral-200 dark:bg-primary/10 dark:text-primary rounded-lg text-xs w-fit mx-auto my-2">{new Date(messages[i]?.time).toLocaleDateString('en-US', { dateStyle: 'medium' })}</li> : ''
+                  new Date(messages[i]?.time).getDay() !== new Date(messages[i - 1]?.time).getDay() ? <li className="flex justify-center p-2 bg-neutral-200 bg-primary/20 dark:text-primary text-yellow-800 rounded-lg text-xs w-fit mx-auto my-4">{new Date(messages[i]?.time).toLocaleDateString('en-US', { dateStyle: 'medium' })}</li> : ''
                 }
                 <li className={`flex gap-2 ${msg?.sender === username ? "self-end flex-row-reverse" : "self-start "} `}>
                   {
@@ -104,8 +97,8 @@ const SingleChatPage = () => {
                       <ProfilePicCircle className='w-6 h-6 md:w-10 md:h-10 bg-white dark:bg-dark' src={profilePic} />
                       : <ProfilePicCircle className='w-6 h-6 md:w-10 md:h-10 bg-white dark:bg-dark' src={user?.profilePic} />
                   }
-                  <div className={`${msg?.sender === username ? "bg-green-200 dark:bg-green-500/20  dark:text-green-500 " : "bg-sky-200 dark:bg-sky-500/20 dark:text-sky-500"} pl-3 pr-2 max-w-[75%] rounded-md flex flex-col gap-1  ${msg?.biggerText ? 'text-3xl md:text-4xl pt-2' : 'py-1.5'}  relative`}>
-                    <p className="text-sm">
+                  <div className={`${msg?.sender === username ? "bg-green-100 dark:bg-green-500/20  dark:text-green-500 " : "bg-sky-100 dark:bg-sky-500/20 dark:text-sky-500"} pl-3 pr-2 max-w-[75%] rounded-md flex flex-col gap-1  ${msg?.biggerText ? 'text-3xl md:text-4xl pt-2' : 'py-1.5'}  relative`}>
+                    <p>
                       {msg?.message}
                     </p>
 
@@ -118,25 +111,22 @@ const SingleChatPage = () => {
               )
             }
             {
-              isTyping ? <li className={`flex gap-2 `}>
-              <ProfilePicCircle className='w-6 h-6 md:w-10 md:h-10 bg-white dark:bg-dark' src={user?.profilePic} />
-              <div className={`bg-primary/10 p-4 rounded-md flex items-center gap-2 relative`}>
+              typingUsers[username2] ? <li className={`flex gap-2 `}>
+                <ProfilePicCircle className='w-6 h-6 md:w-10 md:h-10 bg-white dark:bg-dark' src={user?.profilePic} />
+                <div className={`bg-primary/10 p-4 rounded-md flex items-center gap-2 relative`}>
                   <div className="w-2 h-2 animate-bounce bg-primary rounded-full"></div>
                   <div className="w-2 h-2 animate-bounce bg-primary rounded-full"></div>
-                  <div className="w-2 h-2 animate-bounce bg-primary rounded-full"></div> 
-              </div>
-            </li>  : ""
+                  <div className="w-2 h-2 animate-bounce bg-primary rounded-full"></div>
+                </div>
+              </li> : ""
             }
-
           </ul>
           <div className="py-[5vh]" ref={scrollRef}></div>
         </Main>
         {
           isMessagesLoaded && <ChatTextInput scrollRef={scrollRef} fetchMessages={fetchMessages} setMessages={setMessages} />
-
         }
       </section>
-
     </>
   )
 }

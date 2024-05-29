@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { selectMyStories } from "./storySlice";
 import { useGetProfilePicQuery } from "../user/usersApiSlice";
 import LoadingSreen from "../../screens/LoadingScreen";
-import { MdClose } from "react-icons/md";
+import { MdAccountCircle, MdClose } from "react-icons/md";
 import { BsPlusCircleFill } from "react-icons/bs";
 import { formatDistanceToNow } from "date-fns";
 

@@ -1,17 +1,17 @@
-import {apiSlice} from '../api/apiSlice'
+import { apiSlice } from '../api/apiSlice'
 import { setAllStories } from './storySlice';
 export const storyApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
-        addNewStory : builder.mutation({
+        addNewStory: builder.mutation({
             query: body => ({
-                 url:'/stories',
-                 method:'POST',
-                 body
+                url: '/stories',
+                method: 'POST',
+                body
             })
         }),
         getAllStories: builder.query({
             query: username => `/stories/${username}`
-            
+
         }),
         getUserStoriesByUsername: builder.query({
             query: username => `/stories/mystories/${username}`
@@ -19,4 +19,4 @@ export const storyApiSlice = apiSlice.injectEndpoints({
     })
 });
 
-export const {useGetUserStoriesByUsernameQuery,useGetAllStoriesQuery, useAddNewStoryMutation} = storyApiSlice;
+export const { useGetUserStoriesByUsernameQuery, useGetAllStoriesQuery, useAddNewStoryMutation } = storyApiSlice;

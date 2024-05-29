@@ -10,7 +10,7 @@ import Main from '../components/Main'
 import LoadingSpinner from "../screens/LoadingSpinner";
 
 const SearchPage = () => {
-  const { data: users, isLoading,isSuccess, isError, error } = useGetAllUsersQuery();
+  const { data: users, isLoading, isSuccess, isError, error } = useGetAllUsersQuery();
   const [searchInput, setSearchInput] = useState('')
   const [searchUser, { isLoading: loadingUsers, isFetching }] = useSearchUserMutation();
   const [showSearchResults, setShowSearchResults] = useState(false);
@@ -67,10 +67,10 @@ const SearchPage = () => {
             <>
               <p className="px-4 pb-2 text-sm text-gray-600 dark:text-gray-300">People you might know</p>
               {
-               isLoading && <LoadingSreen/>
+                isLoading && <LoadingSreen />
               }
               {
-               isSuccess && <UserList users={users} />
+                isSuccess && <UserList users={users} />
               }
             </>
         }

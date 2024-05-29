@@ -1,5 +1,4 @@
 import { Route, Routes } from "react-router-dom"
-
 import Register from "./features/auth/Register"
 import ProfilePage from "./features/user/ProfilePage"
 import HomePage from "./pages/HomePage"

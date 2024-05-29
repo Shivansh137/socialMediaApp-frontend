@@ -1,24 +1,24 @@
-import {apiSlice} from '../api/apiSlice'
+import { apiSlice } from '../api/apiSlice'
 export const postsApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
-       
+
         getAllPostsByUsername: builder.query({
             query: username => `/posts/${username}`
         }),
         getUserPostsByUsername: builder.query({
             query: username => `/posts/myposts/${username}`,
-            providesTags:() => {
-                return [{type:'Post', id:'USER'}]
+            providesTags: () => {
+                return [{ type: 'Post', id: 'USER' }]
             }
         }),
         addPost: builder.mutation({
-            query: body =>({
-                url:"/posts",
-                method:"POST",
+            query: body => ({
+                url: "/posts",
+                method: "POST",
                 body
             }),
-            invalidatesTags:()=>{
-                return [{type:'Post', id:'USER'}]
+            invalidatesTags: () => {
+                return [{ type: 'Post', id: 'USER' }]
             }
         }),
         updatePost: builder.mutation({
@@ -30,23 +30,23 @@ export const postsApiSlice = apiSlice.injectEndpoints({
         }),
         deletePost: builder.mutation({
             query: id => ({
-                url:`/posts/${id}`,
-                method:'DELETE'     
+                url: `/posts/${id}`,
+                method: 'DELETE'
             }),
-            invalidatesTags:()=>{
-                return [{type:'Post', id:'USER'}]
+            invalidatesTags: () => {
+                return [{ type: 'Post', id: 'USER' }]
             }
         }),
         likePost: builder.mutation({
             query: body => ({
                 url: `/posts/like/${body.id}`,
-                method:'PATCH',
-                body:{
-                    username:body.username
+                method: 'PATCH',
+                body: {
+                    username: body.username
                 }
             }),
-            invalidatesTags:()=>{
-                return [{type:'Post', id:'USER'}]
+            invalidatesTags: () => {
+                return [{ type: 'Post', id: 'USER' }]
             }
         }),
         getComments: builder.query({
@@ -54,8 +54,8 @@ export const postsApiSlice = apiSlice.injectEndpoints({
         }),
         addComment: builder.mutation({
             query: body => ({
-                url:`/posts/comments/${body.id}`,
-                method:'POST',
+                url: `/posts/comments/${body.id}`,
+                method: 'POST',
                 body: body.comment
             })
         })
@@ -64,11 +64,11 @@ export const postsApiSlice = apiSlice.injectEndpoints({
 
 export const {
     useGetAllPostsByUsernameQuery,
-     useGetPostByIdQuery,
-     useGetUserPostsByUsernameQuery,
-      useAddPostMutation,
-       useDeletePostMutation,
-       useLikePostMutation,
-       useGetCommentsQuery,
-       useAddCommentMutation
-    } = postsApiSlice;
+    useGetPostByIdQuery,
+    useGetUserPostsByUsernameQuery,
+    useAddPostMutation,
+    useDeletePostMutation,
+    useLikePostMutation,
+    useGetCommentsQuery,
+    useAddCommentMutation
+} = postsApiSlice;

@@ -12,26 +12,26 @@ const ChatTextInput = ({ setMessages, scrollRef }) => {
     const { username: username2 } = useParams();
     const [addMessage] = useAddNewMessageMutation();
     const addNewMessage = async () => {
-            try {
-                let newMessage = {
-                    sender: username,
-                    reciever: username2,
-                    message,
-                    biggerText: Boolean(!/\P{Extended_Pictographic}/gu.test(Array.from(message).filter(c => ![8205, 65039].includes(c.charCodeAt(0))).join("")) && message.length < 12),
-                    isReaded: false,
-                    time: Date.now()
-                }
-                socket.emit('send-msg', { reciever: username2, message: { ...newMessage, _id: nanoid() } });
-                setMessages(msgs => [...msgs,newMessage]);
-                setMessage('');
-                await addMessage(newMessage);
-            } catch (error) {
-                console.log(error);
+        try {
+            let newMessage = {
+                sender: username,
+                reciever: username2,
+                message,
+                biggerText: Boolean(!/\P{Extended_Pictographic}/gu.test(Array.from(message).filter(c => ![8205, 65039].includes(c.charCodeAt(0))).join("")) && message.length < 12),
+                isReaded: false,
+                time: Date.now()
             }
+            socket.emit('send-msg', { reciever: username2, message: { ...newMessage, _id: nanoid() } });
+            setMessages(msgs => [...msgs, newMessage]);
+            setMessage('');
+            await addMessage(newMessage);
+        } catch (error) {
+            console.log(error);
+        }
     }
     const handleInput = (e) => {
+        socket.emit('sendTypingStatus', username, username2);
         setMessage(e.target.value);
-        socket.emit('sendTypingStatus', username2);
     }
     return (
         <section className="flex items-center gap-2 px-2 py-2 md:px-4 bg-light dark:bg-dark relative">

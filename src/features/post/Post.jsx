@@ -9,7 +9,7 @@ import { useState } from "react"
 import { nanoid } from "@reduxjs/toolkit"
 import { Link, useOutletContext } from "react-router-dom"
 import ProfilePicCircle from "../../components/ProfilePicCircle"
-import { IoChatbubble, IoChatbubbleOutline } from "react-icons/io5"
+import { IoChatbubbleOutline } from "react-icons/io5"
 
 const Post = ({ post }) => {
   const { username } = useAuthData();
@@ -22,10 +22,10 @@ const Post = ({ post }) => {
   const handleLike = async (id) => {
     setLiked(e => !e)
     try {
+      await like({ id, username }).unwrap();
       if (!liked) {
         socket.emit('like', username, post?.username);
         await addNotification({ username: post?.username, username2: username, message: ' liked your post' }).unwrap();
-        await like({ id, username }).unwrap();
       }
     } catch (error) {
       console.log(error);

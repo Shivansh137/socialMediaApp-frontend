@@ -6,7 +6,7 @@ import { useGetCommentsQuery } from './postsApiSlice'
 import LoadingScreen from '../../screens/LoadingScreen'
 import CommentInput from './CommentInput'
 import LoadingSpinner from '../../screens/LoadingSpinner'
-import { BiSolidChat } from 'react-icons/bi'
+import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
 
 const CommentsPage = () => {
   const { id } = useParams();
@@ -20,8 +20,8 @@ const CommentsPage = () => {
             <Header title='Comments' />
             {
               !comments.length && <article className='flex flex-col items-center mt-[75%]'>
-                <BiSolidChat size={75} />
-                <p>Add a Comment</p>
+                <IoChatbubbleEllipsesOutline size={65} />
+                <p className='m-4'>Add a Comment</p>
               </article>
             }
             <ul className='flex flex-col gap-4 pt-4'>
@@ -31,7 +31,7 @@ const CommentsPage = () => {
             </ul>
           </>
         }
-      <CommentInput refetch={refetch} />
+        <CommentInput refetch={refetch} />
       </Main>
     </>
   )

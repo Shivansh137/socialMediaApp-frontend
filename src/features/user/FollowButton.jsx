@@ -1,4 +1,4 @@
-import {  useNavigate, useOutletContext } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import { selectUserData, useAddNotificationMutation, useToggleFollowMutation } from "./usersApiSlice";
 import useAuthData from "../../hooks/useAuthData";
 import { useSelector } from "react-redux";
@@ -45,13 +45,13 @@ const FollowButton = ({ username, classname }) => {
   return (
     <button disabled={isLoading} onClick={handleFollow} className={`${isFollowing ? ' text-gray-500 bg-neutral-100 dark:bg-gray-500/60  dark:text-gray-100' : 'bg-sky-500 dark:bg-blue-600 text-white'}  
     py-2 rounded-md ${classname}`}>
-      {isLoading ? 
-      <div className="flex gap-1 py-1 justify-center">
-        <div className="w-1 h-1 animate-bounce bg-white rounded-full"></div>
-        <div className="w-1 h-1 animate-bounce bg-white rounded-full"></div>
-        <div className="w-1 h-1 animate-bounce bg-white rounded-full"></div>
+      {isLoading ?
+        <div className="flex gap-1 py-1 justify-center">
+          <div className="w-1 h-1 animate-bounce bg-white rounded-full"></div>
+          <div className="w-1 h-1 animate-bounce bg-white rounded-full"></div>
+          <div className="w-1 h-1 animate-bounce bg-white rounded-full"></div>
         </div>
-         : isFollowing ? 'Remove' : 'Follow'}
+        : isFollowing ? 'Remove' : 'Follow'}
     </button>
   )
 }

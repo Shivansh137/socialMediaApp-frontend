@@ -2,13 +2,13 @@ import Main from '../../components/Main'
 import Header from '../../components/Header'
 import Notification from './Notification'
 import useAuthData from '../../hooks/useAuthData'
-import { useClearNotificationsMutation, useGetAllNotificationsQuery } from '../user/usersApiSlice'
+import { useClearNotificationsMutation } from '../user/usersApiSlice'
 import LoadingScreen from '../../screens/LoadingScreen'
 import { nanoid } from '@reduxjs/toolkit'
 import { useDispatch, useSelector } from 'react-redux'
 import { clearNotifications, selectAllNotifications } from './notificationsSlice'
 import { useEffect } from 'react'
-import { MdNotificationsNone, MdNotificationsOff } from 'react-icons/md'
+import { MdNotificationsOff } from 'react-icons/md'
 
 const NotificationsPage = () => {
   const { username } = useAuthData();

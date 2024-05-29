@@ -16,12 +16,12 @@ export const usersApiSlice = apiSlice.injectEndpoints({
     }),
     // GET PROFILE PIC BY USERNAME
     getProfilePic: builder.query({
-         query: username => `/users/profilePic/${username}`,
-         keepUnusedDataFor:600,
-         providesTags:()=> [{type:'User', id:"PROFILE_PIC"}]
-       
+      query: username => `/users/profilePic/${username}`,
+      keepUnusedDataFor: 600,
+      providesTags: () => [{ type: 'User', id: "PROFILE_PIC" }]
+
     }),
-     // CREATE NEW USER
+    // CREATE NEW USER
     addUser: builder.mutation({
       query: formData => ({
         url: "/users",
@@ -32,20 +32,20 @@ export const usersApiSlice = apiSlice.injectEndpoints({
     }),
     // UPDATE USER 
     updateUser: builder.mutation({
-          query: body => ({
-            url:`/users/${body.username}`,
-            method:'PATCH',
-            body
-          }),
-          invalidatesTags:(result,err,args)=>{
-            return [{type:'User', id:args.username}, {type:'User', id:'PROFILE_PIC'}]
-          }
+      query: body => ({
+        url: `/users/${body.username}`,
+        method: 'PATCH',
+        body
+      }),
+      invalidatesTags: (result, err, args) => {
+        return [{ type: 'User', id: args.username }, { type: 'User', id: 'PROFILE_PIC' }]
+      }
     }),
     // change password
     changePassword: builder.mutation({
       query: body => ({
-        url:`/users/change_password`,
-        method:'PATCH',
+        url: `/users/change_password`,
+        method: 'PATCH',
         body
       })
     }),
@@ -56,8 +56,8 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         method: 'PATCH',
         body
       }),
-      invalidatesTags:(result, err, arg) => {
-        return [{type:'User', id:arg.followerUsername}, {type:'User', id:arg.followingUsername}]
+      invalidatesTags: (result, err, arg) => {
+        return [{ type: 'User', id: arg.followerUsername }, { type: 'User', id: arg.followingUsername }]
       }
     }),
     // GET FOLLOWERS DATA BY USERNAME
@@ -76,30 +76,30 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         url: `/users/following/${username}`,
         method: 'GET'
       }),
-      providesTags:(result, err, args) => {
-        return [{type:'User', id:args}]
+      providesTags: (result, err, args) => {
+        return [{ type: 'User', id: args }]
       }
     }),
     // SEARCH USERS
     searchUser: builder.mutation({
-      query: reg =>  ({
-        url:`/users/search/${reg}`,
-        method:'GET',
+      query: reg => ({
+        url: `/users/search/${reg}`,
+        method: 'GET',
       }),
     }),
     // GET UNREADED MESSAGES
     getUnreadedMessages: builder.query({
       query: username => `/chats/messages/unreaded/${username}`,
-      providesTags:[{type:'Chat', id:'UNREADED'}]
+      providesTags: [{ type: 'Chat', id: 'UNREADED' }]
     }),
     // MARK UNREADED MESSAGES AS READED
     readUnreadedMessages: builder.mutation({
       query: body => ({
         url: '/chats/messages/unreaded',
-        method:'POST',
+        method: 'POST',
         body
       }),
-      invalidatesTags: [{type:'Chat', id:'UNREADED'}]
+      invalidatesTags: [{ type: 'Chat', id: 'UNREADED' }]
     }),
     // GET ALL UNREADED NOTIFICATIONS
     getAllNotifications: builder.query({
@@ -107,18 +107,18 @@ export const usersApiSlice = apiSlice.injectEndpoints({
     }),
     // ADD A NOTIFICATION
     addNotification: builder.mutation({
-      query: ({username, ...body}) => ({
-        url:`/users/notifications/${body.username}`,
-        method:'POST',
+      query: ({ username, ...body }) => ({
+        url: `/users/notifications/${username}`,
+        method: 'POST',
         body
-       })
+      })
     }),
     // CLEAR ALL NOTIFICATIONS
     clearNotifications: builder.mutation({
-       query: username => ({
-        url:`/users/notifications/${username}`,
-        method:'DELETE'
-       })
+      query: username => ({
+        url: `/users/notifications/${username}`,
+        method: 'DELETE'
+      })
     })
   })
 });

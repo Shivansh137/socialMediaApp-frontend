@@ -16,7 +16,7 @@ const FollowersPage = () => {
     <>
       <Header title={"Followers"} />
       <Main>
-      <p className="hidden md:block p-4">Followers</p>
+        <p className="hidden md:block p-4">Followers</p>
 
         {
           isLoading && <LoadingSreen />

@@ -19,7 +19,7 @@ const AddNewPost = () => {
     const [ratio, setRatio] = useState('1/1');
     const [title, setTitle] = useState('');
     const [location, setLocation] = useState('');
-    const [addPost, { isLoading, isSuccess }] = useAddPostMutation();
+    const [addPost, { isLoading }] = useAddPostMutation();
 
     const toDataUrl = (file) => {
         return new Promise((resolve, reject) => {
@@ -121,7 +121,7 @@ const AddNewPost = () => {
 
                         <TextInput value={title} onChange={(e) => { setTitle(e.target.value) }} placeholder="Title" />
                         <TextInput value={location} onChange={(e) => { setLocation(e.target.value) }} placeholder="Location" />
-                        <button type="button" onClick={handleSubmit} className="px-4 py-3 text-md bg-primary text-white rounded-lg w-full">Create New Post</button>
+                        <button type="button" onClick={handleSubmit} className="px-4 py-2 bg-primary text-black rounded-lg w-full">Create New Post</button>
                     </form>
                 </> : ''
             }

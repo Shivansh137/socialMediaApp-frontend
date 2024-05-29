@@ -22,7 +22,7 @@ export const chatsApiSlice = apiSlice.injectEndpoints({
       }),
       getUnreadedMessages: builder.query({
          query: username => `/chats/messages/unreaded/${username}`,
-         providesTags:[{type:'Chat',id:'UNREADED'}]
+         providesTags: [{ type: 'Chat', id: 'UNREADED' }]
       }),
       readUnreadedMessagesOfOneUser: builder.mutation({
          query: body => ({
@@ -30,7 +30,7 @@ export const chatsApiSlice = apiSlice.injectEndpoints({
             method: 'POST',
             body
          }),
-         invalidatesTags:[{type:'Chat',id:'UNREADED'}]
+         invalidatesTags: [{ type: 'Chat', id: 'UNREADED' }]
       })
    })
 });

@@ -74,7 +74,7 @@ const ProfilePage = () => {
           <button className='bg-sky-500/25 text-sky-500  px-4 py-2 md:py-3 text-sm rounded-md w-full'>
             <Link to={`/chat/${username}`}>Message</Link>
           </button>
-          <FollowButton username={username} classname='text-sm w-full bg-red-500/25 dark:bg-red-500/25 text-red-500 dark:text-red-500' />
+          <FollowButton username={username} classname='text-sm w-full bg-gray-500/25 text-gray-500' />
         </section>
 
         {

@@ -4,14 +4,11 @@ import useAuthData from "../../hooks/useAuthData";
 import { useParams } from "react-router-dom";
 import { useAddCommentMutation } from "./postsApiSlice";
 
-
 const CommentInput = ({ refetch }) => {
     const [comment, setComment] = useState('');
     const { username } = useAuthData();
     const { id } = useParams();
     const [addComment] = useAddCommentMutation();
-   
-
 
     const addNewComment = async () => {
         if (comment) {

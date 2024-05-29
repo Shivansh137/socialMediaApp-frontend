@@ -3,11 +3,10 @@ import { useRefreshMutation } from "./authApiSlice"
 import { useSelector } from "react-redux";
 import { selectToken } from "./authSlice";
 import { useEffect, useState } from "react";
-import LoadingSreen from "../../screens/LoadingScreen";
 import SplashScreen from "../../screens/SplashScreen";
 
 const Persist = () => {
-    const [refresh, { isLoading, isSuccess, isError, error }] = useRefreshMutation();
+    const [refresh, { isLoading, isError, error }] = useRefreshMutation();
     const token = useSelector(selectToken);
     const [success, setSuccess] = useState(false);
     const verifyToken = async () => {

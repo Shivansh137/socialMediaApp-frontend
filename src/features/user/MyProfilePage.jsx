@@ -84,7 +84,6 @@ const MyProfilePage = () => {
           </li>
         </ul>
 
-
         <section className='flex gap-4 px-4 w-full md:px-8'>
           <button className='dark:bg-primary/25 dark:text-primary bg-primary/80 text-black py-2 rounded-md w-full text-sm'>
             <Link to={'edit'}>Edit Profile</Link>
@@ -93,12 +92,11 @@ const MyProfilePage = () => {
           {
             showAlert && (
               <section className='w-screen h-screen md:w-full absolute flex items-center justify-center top-0 left-0 bg-[rgba(0,0,0,0.5)] z-10'>
-
-                <section className='bg-white dark:bg-slate-700 p-10  rounded-lg'>
+                <section className='bg-white dark:bg-dark border shadow-lg p-10  rounded-lg'>
                   <p>Are you sure you want to Logout?</p>
                   <div className='flex gap-4 pt-8'>
-                    <button onClick={handleLogout} className='bg-red-700 text-white py-1 rounded-md w-full'>Logout</button>
-                    <button onClick={() => { setShowAlert(false) }} className='bg-red-100 border-2 text-red-700 py-1 rounded-md w-full'>Cancel</button>
+                    <button onClick={handleLogout} className='bg-red-500 text-white py-1 rounded-md w-full'>Logout</button>
+                    <button onClick={() => { setShowAlert(false) }} className='bg-white text-red-500 py-1 rounded-md w-full'>Cancel</button>
                   </div>
                 </section>
               </section>
@@ -112,7 +110,7 @@ const MyProfilePage = () => {
                 myPosts.map(myPost => <Link to={`/posts/${myPost._id}`} key={nanoid()} className={`relative w-full aspect-square bg-light shadow-md overflow-hidden rounded-md bg-no-repeat bg-cover`} style={{ backgroundImage: `url(https://res.cloudinary.com/dofd4iarg/image/upload/v1671877960/${myPost.media[0]?.public_id}.${myPost.media[0]?.extension})` }}>
 
                   {
-                    myPost?.media?.length > 1 && <MdFilterNone className='absolute top-1 right-1 text-white bg-[rgba(0,0,0,0.2)] rounded-md box-content p-1 m-1' />
+                    myPost?.media?.length > 1 && <MdFilterNone key={nanoid()} className='absolute top-1 right-1 text-white bg-[rgba(0,0,0,0.2)] rounded-md box-content p-1 m-1' />
                   }
                 </Link>
                 )

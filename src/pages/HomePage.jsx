@@ -21,7 +21,7 @@ const HomePage = () => {
 
   return (
     <>
-     { isError ? <ErrorScreen error={error} /> : ''}
+      {isError ? <ErrorScreen error={error} /> : ''}
       <SideBar show={[showSideBar, setShowSideBar]} />
 
       <header className="p-4 flex items-center dark:bg-dark-sec gap-2 md:hidden sm:text-xl">
