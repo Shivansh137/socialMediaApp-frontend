@@ -39,7 +39,7 @@ function App() {
             </Route>
           </Route>
 
-          <Route path="search" element={<SearchPage />} />
+          <Route path="/search" element={<SearchPage />} />
 
           <Route path="chat">
             <Route index element={<ChatPage />} />
