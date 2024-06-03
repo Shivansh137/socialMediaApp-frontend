@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom"
+import { Navigate, Route, Routes } from "react-router-dom"
 import Register from "./features/auth/Register"
 import ProfilePage from "./features/user/ProfilePage"
 import HomePage from "./pages/HomePage"
@@ -39,7 +39,7 @@ function App() {
             </Route>
           </Route>
 
-          <Route path="/search" element={<SearchPage />} />
+          <Route path="search" element={<SearchPage />} />
 
           <Route path="chat">
             <Route index element={<ChatPage />} />
@@ -67,7 +67,7 @@ function App() {
 
         </Route>
       </Route>
-
+        <Route path="*" element={<Navigate to={'/'} replace />} />
     </Routes >
   )
 }
