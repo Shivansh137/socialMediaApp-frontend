@@ -65,9 +65,9 @@ function App() {
           <Route path="stories/add_story" element={<AddNewStory />} />
           <Route path="stories/mystories" element={<MyStoryPage />} />
 
+          <Route path="*" element={<Navigate to={'/'} replace />} />
         </Route>
       </Route>
-        <Route path="*" element={<Navigate to={'/'} replace />} />
     </Routes >
   )
 }
