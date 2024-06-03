@@ -27,7 +27,7 @@ function App() {
       <Route path="/login" element={<LoginPage />} />
 
       <Route element={<Persist />} >
-        <Route path="/" element={<Prefetch />}>
+        <Route element={<Prefetch />}>
 
           <Route index element={<HomePage />} />
 
