@@ -19,16 +19,19 @@ import MyStoryPage from "./features/story/MyStoryPage"
 import AddNewPost from "./features/post/AddNewPost"
 import CommentsPage from "./features/post/CommentsPage"
 import MyPostViewer from "./features/user/MyPostViewer"
+import LoadingSpinner from "./screens/LoadingSpinner"
 
 function App() {
   return (
-    <Routes>
+    <Routes >
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<LoginPage />} />
 
-      <Route element={<Persist />} >
-        <Route path="/" element={<Prefetch />}>
+      <Route path="/" element={<Persist />} >
+        <Route element={<Prefetch />}>
 
+          <Route path="*" element={<Navigate to={'/'} replace />} />
+          
           <Route index element={<HomePage />} />
 
           <Route path="posts">
@@ -53,7 +56,7 @@ function App() {
             <Route path="edit" element={<EditProfilePage />} />
           </Route>
 
-          <Route path=":username">
+          <Route path="users/:username">
             <Route index element={<ProfilePage />} />
             <Route path="followers" element={<FollowersPage />} />
             <Route path="following" element={<FollowingPage />} />

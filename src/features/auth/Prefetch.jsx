@@ -16,8 +16,8 @@ import { useGetChatUsersQuery } from "../chat/chatApiSlice"
 const Prefetch = () => {
     const { username } = useAuthData();
     const token = useSelector(selectToken);
-    // const socket = io('http://localhost:8000'); 
-    const socket = io('https://socialmediaappapi.onrender.com');
+    const socket = io('http://localhost:8000'); 
+    //const socket = io('https://socialmediaappapi.onrender.com');
     const { refetch } = useGetChatUsersQuery(username);
 
     useEffect(() => {
