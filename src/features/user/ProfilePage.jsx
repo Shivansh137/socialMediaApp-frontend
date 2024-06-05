@@ -19,13 +19,13 @@ const ProfilePage = () => {
   const { data: posts, isLoading: isLoadingPosts, isSuccess: isSuccessPosts } = useGetUserPostsByUsernameQuery(username);
 
   if (isError) return <ErrorScreen error={error} />
+  
+   if(isLoading) return <LoadingSreen />
+  
   if (isSuccess && isSuccessPosts) return (
     <>
       <Header title={user?.username} />
       <Main className={'px-4 md:ml-32'}>
-        {
-          isLoading && <LoadingSreen />
-        }
         <section className='flex flex-col items-center mt-4'>
           {
             user?.profilePic ? <div onClick={() => { setShowPic(true) }} className='w-24 h-24 md:w-36 md:h-36 rounded-full my-4 dark:bg-dark-sec bg-cover bg-center bg-no-repeat bg-[rgba(10,10,10,1)]' style={{ backgroundImage: `url(https://res.cloudinary.com/dofd4iarg/image/upload/v1690608655/${user?.profilePic}.png)` }}></div> : <p><MdAccountCircle className='text-slate-300 text-8xl' /></p>

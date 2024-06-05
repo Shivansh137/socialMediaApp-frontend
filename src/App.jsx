@@ -27,7 +27,7 @@ function App() {
       <Route path="/login" element={<LoginPage />} />
 
       <Route element={<Persist />} >
-        <Route element={<Prefetch />}>
+        <Route path="/" element={<Prefetch />}>
 
           <Route index element={<HomePage />} />
 
@@ -59,13 +59,12 @@ function App() {
             <Route path="following" element={<FollowingPage />} />
           </Route>
 
-          <Route path="/notifications" element={<NotificationsPage />} />
+          <Route path="notifications" element={<NotificationsPage />} />
 
           <Route path="stories/:index" element={<StoryPage />} />
           <Route path="stories/add_story" element={<AddNewStory />} />
           <Route path="stories/mystories" element={<MyStoryPage />} />
 
-          <Route path="*" element={<Navigate to={'/'} replace />} />
         </Route>
       </Route>
     </Routes >
