@@ -11,7 +11,7 @@ const UserList = ({ users, type }) => {
         users?.map(user => {
           return (
             <li key={user?.username}>
-              <Link to={`/users/${user?.username === username ? 'profile' : user?.username}`} className={`flex ${type === 'list' ? '' : 'md:flex-col'} items-center p-4 md:p-4 gap-3 md:gap-4 hover:border dark:border-0 hover:shadow-md shadow-sm dark:bg-dark-sec rounded-xl md:hover:scale-105`}>
+              <Link to={`/${user?.username === username ? 'profile' : 'users/'+user?.username}`} className={`flex ${type === 'list' ? '' : 'md:flex-col'} items-center p-4 md:p-4 gap-3 md:gap-4 hover:border dark:border-0 hover:shadow-md shadow-sm dark:bg-dark-sec rounded-xl md:hover:scale-105`}>
                 {
                   <ProfilePicCircle src={user?.profilePic} className={`w-10 h-10 ${type === 'list' ? '' : ' md:w-24 md:h-24'}`} />
                 }
