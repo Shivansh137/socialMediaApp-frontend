@@ -38,8 +38,8 @@ const Post = ({ post }) => {
           <ProfilePicCircle className='w-10 h-10' src={profilePic} />
         }
         <div>
-          <p className="text-sm">{post?.username}</p>
-          {post?.location && <p className="text-[.6rem] mt-0.5 dark:text-gray-200">{post?.location}</p>}
+          <p className="">{post?.username}</p>
+          {post?.location && <p className="text-[.6rem] dark:text-gray-200">{post?.location}</p>}
         </div>
 
       </Link>

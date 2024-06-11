@@ -92,11 +92,11 @@ const MyProfilePage = () => {
           {
             showAlert && (
               <section className='w-screen h-screen md:w-full absolute flex items-center justify-center top-0 left-0 bg-[rgba(0,0,0,0.5)] z-10'>
-                <section className='bg-white dark:bg-dark border shadow-lg p-10  rounded-lg'>
-                  <p>Are you sure you want to Logout?</p>
+                <section className='bg-white dark:bg-dark shadow-lg p-10  rounded-lg'>
+                  <p>Are you sure you want to Logout ?</p>
                   <div className='flex gap-4 pt-8'>
                     <button onClick={handleLogout} className='bg-red-500 text-white py-1 rounded-md w-full'>Logout</button>
-                    <button onClick={() => { setShowAlert(false) }} className='bg-white text-red-500 py-1 rounded-md w-full'>Cancel</button>
+                    <button onClick={() => { setShowAlert(false) }} className=' text-red-500 py-2 rounded-md w-full'>Cancel</button>
                   </div>
                 </section>
               </section>

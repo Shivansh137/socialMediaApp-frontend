@@ -19,7 +19,7 @@ input:focus {
 }
 
 .error_input {
-  border: 2px solid #f55
+  border: 1px solid red
 }
 
 @keyframes story {
@@ -113,6 +113,14 @@ input:focus {
   animation: hide_sidebar .5s ease-out;
 }
 
+.flip {
+  transform: scale(-1, 1);
+  -moz-transform: scale(-1, 1);
+  -webkit-transform: scale(-1, 1);
+  -o-transform: scale(-1, 1);
+  -ms-transform: scale(-1, 1);
+  transform: scale(-1, 1);
+}
 
 
 @media (min-width:748px) {
@@ -127,3 +135,4 @@ input:focus {
     border-radius: 10px;
   }
 }
+

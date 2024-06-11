@@ -1,6 +1,6 @@
 import Header from '../../components/Header'
 import { MdAccountCircle, MdClose, MdFilterNone } from 'react-icons/md';
-import { Link, useParams } from 'react-router-dom';
+import { Link, Navigate, useParams } from 'react-router-dom';
 import { useGetUserByUsernameQuery } from './usersApiSlice';
 import { useRef, useState } from 'react';
 import LoadingSreen from '../../screens/LoadingScreen';
@@ -10,14 +10,17 @@ import BottomNavigation from '../../components/BottomNavigation';
 import { useGetUserPostsByUsernameQuery } from '../post/postsApiSlice';
 import Main from '../../components/Main'
 import ProfilePicCircle from '../../components/ProfilePicCircle';
+import useAuthData from '../../hooks/useAuthData';
 
 const ProfilePage = () => {
   const [showPic, setShowPic] = useState(false);
+  const {myUserName} = useAuthData();
   const postsRef = useRef();
   const { username } = useParams();
   const { data: user, isLoading, isSuccess, isError, error } = useGetUserByUsernameQuery(username);
   const { data: posts, isLoading: isLoadingPosts, isSuccess: isSuccessPosts } = useGetUserPostsByUsernameQuery(username);
 
+  if(myUserName === username) return <Navigate to={'/profile'} />
   if (isError) return <ErrorScreen error={error} />
   
    if(isLoading) return <LoadingSreen />

@@ -12,7 +12,7 @@ const StoryCircle = ({ username, index }) => {
                         profilePic ? <img className='w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-white dark:bg-dark-sec' src={`https://res.cloudinary.com/dofd4iarg/image/upload/v1690608655/${profilePic}.png`} alt="" /> : <p><MdAccountCircle className='text-slate-300 text-6xl' /></p>
                     }
                 </section>
-                <p className="text-xs truncate w-16">{username}</p>
+                <p className="text-xs text-center truncate w-16">{username}</p>
             </Link>
         </li>
     )

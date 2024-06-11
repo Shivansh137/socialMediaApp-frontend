@@ -58,7 +58,7 @@ const Prefetch = () => {
 
         const handleRecieveTyping = (username) => {
             store.dispatch(addTypingUser(username));
-            setTimeout(() => { store.dispatch(removeTypingUser(username)) }, 1200);
+            setTimeout(() => { store.dispatch(removeTypingUser(username)) }, 1500);
         }
         socket.on('recieveTypingStatus', handleRecieveTyping);
 
